@@ -21,6 +21,7 @@ Fine-tuning the library models for question answering.
 import logging
 import os
 import sys
+sys.path.append('./src')
 from dataclasses import dataclass, field
 from typing import Optional
 

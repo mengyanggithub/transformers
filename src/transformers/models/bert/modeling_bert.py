@@ -26,6 +26,8 @@ import torch
 import torch.utils.checkpoint
 from torch import nn
 from torch.nn import CrossEntropyLoss, MSELoss
+import torch.fft
+from torch.nn import functional as F
 
 from ...activations import ACT2FN
 from ...file_utils import (
@@ -443,6 +445,7 @@ class BertLayer(nn.Module):
 
     def forward(
         self,
+        i,
         hidden_states,
         attention_mask=None,
         head_mask=None,
@@ -451,6 +454,19 @@ class BertLayer(nn.Module):
         past_key_value=None,
         output_attentions=False,
     ):
+        if i == 2:
+            B,T,C=hidden_states.shape
+            hidden_states_fft = torch.fft.rfft(hidden_states,dim=1)
+            hidden_states_fft  = hidden_states_fft .narrow(1,0,100)
+            padding = (
+                0,0,
+                0,int(T/2)+1-100,
+                0,0
+            )
+            hidden_states_fft  = F.pad(hidden_states_fft ,padding)
+            hidden_states = torch.fft.irfft(hidden_states_fft ,dim=1)
+            hidden_states = hidden_states.float()
+
         # decoder uni-directional self-attention cached key/values tuple is at positions 1,2
         self_attn_past_key_value = past_key_value[:2] if past_key_value is not None else None
         self_attention_outputs = self.attention(
@@ -566,6 +582,7 @@ class BertEncoder(nn.Module):
                 )
             else:
                 layer_outputs = layer_module(
+                    i,
                     hidden_states,
                     attention_mask,
                     layer_head_mask,
