@@ -24,6 +24,7 @@ from transformers import (
     BertTokenizerFast,
     GPT2Tokenizer,
     GPT2TokenizerFast,
+    PreTrainedTokenizerFast,
     RobertaTokenizer,
     RobertaTokenizerFast,
 )
@@ -101,9 +102,7 @@ class AutoTokenizerTest(unittest.TestCase):
             mapping = tuple(mapping.items())
             for index, (child_config, _) in enumerate(mapping[1:]):
                 for parent_config, _ in mapping[: index + 1]:
-                    with self.subTest(
-                        msg="Testing if {} is child of {}".format(child_config.__name__, parent_config.__name__)
-                    ):
+                    with self.subTest(msg=f"Testing if {child_config.__name__} is child of {parent_config.__name__}"):
                         self.assertFalse(issubclass(child_config, parent_config))
 
     @require_tokenizers
@@ -121,3 +120,12 @@ class AutoTokenizerTest(unittest.TestCase):
         tokenizer = AutoTokenizer.from_pretrained("microsoft/mpnet-base", do_lower_case=False)
         tokens = tokenizer.tokenize(sample)
         self.assertEqual("[UNK]", tokens[0])
+
+    @require_tokenizers
+    def test_PreTrainedTokenizerFast_from_pretrained(self):
+        tokenizer = AutoTokenizer.from_pretrained("robot-test/dummy-tokenizer-fast-with-model-config")
+        self.assertEqual(type(tokenizer), PreTrainedTokenizerFast)
+        self.assertEqual(tokenizer.model_max_length, 512)
+        self.assertEqual(tokenizer.vocab_size, 30000)
+        self.assertEqual(tokenizer.unk_token, "[UNK]")
+        self.assertEqual(tokenizer.padding_side, "right")

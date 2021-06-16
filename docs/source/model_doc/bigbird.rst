@@ -41,6 +41,8 @@ propose novel applications to genomics data.*
 
 Tips:
 
+- For an in-detail explanation on how BigBird's attention works, see `this blog post
+  <https://huggingface.co/blog/big-bird>`__.
 - BigBird comes with 2 implementations: **original_full** & **block_sparse**. For the sequence length < 1024, using
   **original_full** is advised as there is no benefit in using **block_sparse** attention.
 - The code currently uses window size of 3 blocks and 2 global blocks.
@@ -48,7 +50,8 @@ Tips:
 - Current implementation supports only **ITC**.
 - Current implementation doesn't support **num_random_blocks = 0**
 
-The original code can be found `here <https://github.com/google-research/bigbird>`__.
+This model was contributed by `vasudevgupta <https://huggingface.co/vasudevgupta>`__. The original code can be found
+`here <https://github.com/google-research/bigbird>`__.
 
 BigBirdConfig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,6 +67,11 @@ BigBirdTokenizer
     :members: build_inputs_with_special_tokens, get_special_tokens_mask,
         create_token_type_ids_from_sequences, save_vocabulary
 
+BigBirdTokenizerFast
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.BigBirdTokenizerFast
+    :members:
 
 BigBird specific outputs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -126,3 +134,52 @@ BigBirdForQuestionAnswering
 
 .. autoclass:: transformers.BigBirdForQuestionAnswering
     :members: forward
+
+
+FlaxBigBirdModel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.FlaxBigBirdModel
+    :members: __call__
+
+
+FlaxBigBirdForPreTraining
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.FlaxBigBirdForPreTraining
+    :members: __call__
+
+
+FlaxBigBirdForMaskedLM
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.FlaxBigBirdForMaskedLM
+    :members: __call__
+
+
+FlaxBigBirdForSequenceClassification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.FlaxBigBirdForSequenceClassification
+    :members: __call__
+
+
+FlaxBigBirdForMultipleChoice
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.FlaxBigBirdForMultipleChoice
+    :members: __call__
+
+
+FlaxBigBirdForTokenClassification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.FlaxBigBirdForTokenClassification
+    :members: __call__
+
+
+FlaxBigBirdForQuestionAnswering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: transformers.FlaxBigBirdForQuestionAnswering
+    :members: __call__
